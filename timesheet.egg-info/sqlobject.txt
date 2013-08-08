@@ -1,0 +1,2 @@
+db_module=timesheet.model
+history_dir=$base/timesheet/sqlobject-history
