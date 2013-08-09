@@ -92,14 +92,14 @@ function x( selectedtype )
     <br/>
 </div>
 
-<b>Please explain why this timesheet is being rejected:</b><br/>
-This will be emailed to ${person.full_name} along with a request to resubmit the timesheet.<br/>
+<b><font style="background-color:#ff8;">&nbsp;Please explain why this timesheet is being rejected:</font></b><br/>
+&nbsp;This will be emailed to ${person.full_name} along with a request to resubmit the timesheet.<br/>
 
 ${form.display()}
 
 <div py:if="not bberry">
-<a class="actionbar" href="javascript:x('cancel')">Cancel</a>
-<a class="actionbar" href="javascript:x('sendemail')">Reject and Send Back</a>
+<a class="actionbarleft" href="javascript:x('sendemail')">Reject and Send Back</a>
+<a class="actionbarleft" href="javascript:x('cancel')">Cancel</a>
 </div>
 
 <div py:if="bberry">

@@ -43,34 +43,34 @@ a.link, a, a.active {
 
 #main_content a.actionbar {
     float: right;
-    color: blue;
+    color: #ff8;
     text-align: right;
-    font-weight: bold;
-    background-color: #eeb;
+    font-weight: normal;
+    background-color: #88d;
     border-radius: 4px;
     padding: 4px;
     margin: 4px;
 }
 
 #main_content a.actionbar:hover {
-    color:white;
-    background-color:#66a;
+    color:#8f0;
+    background-color:#448;
 }
 
 #main_content a.actionbarleft {
     float: left;
-    color: blue;
+    color: #ff8;
     text-align: right;
-    font-weight: bold;
-    background-color: #eeb;
+    font-weight: normal;
+    background-color: #88d;
     border-radius: 4px;
     padding: 4px;
     margin: 4px;
 }
 
 #main_content a.actionbarleft:hover {
-    color:white;
-    background-color:#66a;
+    color:#8f0;
+    background-color:#448;
 }
 
 #main_content a.deleteme {
