@@ -1,5 +1,5 @@
 <form xmlns:py="http://purl.org/kid/ns#"
-    name="${name}" action="${action}" method="${method}" class="tableform" autocomplete="off"
+    name="${name}" action="${action}" method="${method}" class="tableform"
     py:attrs="form_attrs" >
 
 <?python

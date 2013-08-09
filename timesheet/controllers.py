@@ -152,6 +152,9 @@ class ExportForm(TableForm):
 # -----------------------------------------------------------------------------
 class Root(controllers.RootController):
 
+    #Allow database editing, for now
+    database = CatWalk(model)
+
     def buildProjectsByDept(self= None):
         pbd = {}
         lookup = []
@@ -194,9 +197,6 @@ class Root(controllers.RootController):
                 plookup[truncatedname] = p
 
         return pcodes, plookup
-
-    #Allow database editing, for now
-    database = CatWalk(model)
 
     projectsByDept = buildProjectsByDept()
     projectLookupByCode, projectLookupByDescription = buildProjectLookup()
@@ -1351,7 +1351,7 @@ class Root(controllers.RootController):
 
                 wHours.append(widgets.TextField('%d:%d'%(x,day), # name is now row:day
                     default = row.hours[day] or '', # This suppresses 0.0 cells.
-                    attrs=dict(size="1", style="width:32px",
+                    attrs=dict(size="1", style="width:32px", autocomplete="off",
                                onchange="updatelabels()",
                                onkeydown=keymapper),
                     validator=validators.Number()))
