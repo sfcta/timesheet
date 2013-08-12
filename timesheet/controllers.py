@@ -50,9 +50,6 @@ import types
 
 import model
 
-# from timesheet import json
-# import logging
-# log = logging.getLogger("timesheet.controllers")
 
 # FORMS and globals -----------------------------------------------------------
 def kidfile(name):
@@ -602,12 +599,14 @@ class Root(controllers.RootController):
         msg = msg + '\r\n\r\nTo edit this timesheet, go to http://timesheets/edit/%d' % t.id
 
         try:
-            server = smtplib.SMTP('$$MAILSERVER$$',25)
+            mailserver = tg.config.get('mail.server','localhost')
+            port = tg.config.get('mail.port',25)
+            server = smtplib.SMTP(mailserver,port)
             server.set_debuglevel(1)
             server.sendmail(fromaddr, toaddr, msg)
             server.quit()
         except:
-            flash('Sending email failed.  I tried; sorry.\nTimesheet marked rejected, but please notify them yourself...')
+            flash('Sending email failed.  I tried; sorry.\r\nTimesheet marked rejected, but please notify them yourself...')
             redirect(url('/index'))
 
         flash('Email sent to '+t.whose.full_name+'.')
@@ -1077,8 +1076,10 @@ class Root(controllers.RootController):
                                 action='/updateperson')
 
         # Add field to create one new timesheet for this employee
-        DateForm = TableForm('date_picker', fields = dateform_fields(),
-            action = tg.url('/createonesheet/'+str(dID)), submit_text = "Create timesheet")
+        DateForm = None
+        if (dID != -1):
+            DateForm = TableForm('date_picker', fields = dateform_fields(),
+                action = tg.url('/createonesheet/'+str(dID)), submit_text = "Create timesheet")
 
         return dict(form=EmpForm, dateform=DateForm)
 

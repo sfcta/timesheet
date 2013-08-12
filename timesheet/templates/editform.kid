@@ -55,7 +55,7 @@
     <tr><td>&nbsp;</td></tr>
 
     <tr><td colspan="3"></td>
-        <td colspan="14">Notes: Click on a date, or double-click on a cell, to add notes.</td>
+        <td colspan="14">Notes: Double-click on a cell to add notes.</td>
     </tr>
 
     <tr py:for="day,note in notes">
