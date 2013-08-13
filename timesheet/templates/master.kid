@@ -38,9 +38,16 @@
     <div id="headerlink"><a href="http://http://codingforums.com/"></a></div>
 
     <div id="main_content">
-        <div id="status_block" class="flash" py:if="value_of('tg_flash', None)" 
-             py:content="tg_flash">
-        </div>
+
+        <!-- flash and warning boxes -->
+        <span py:if="tg_flash != None and tg_flash[0] != '!'">
+          <div id="status_block" class="flash" py:if="value_of('tg_flash',None)" py:content="tg_flash"></div>
+        </span>
+        <span py:if="tg_flash != None and tg_flash[0] == '!'">
+          <div id="warning_block" class="flash" py:if="value_of('tg_flash', None)" py:content="tg_flash[1:]"></div>
+        </span>
+
+        <!-- main content -->
         <div py:replace="[item.text]+item[:]">page content</div>
     </div>
 

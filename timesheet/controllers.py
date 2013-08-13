@@ -364,7 +364,7 @@ class Root(controllers.RootController):
             or (identity.current.user.isManager and ts.status<LOCKED):
                 pass
         else:
-            flash("Sorry, you cannot edit that timesheet.")
+            flash("!Sorry, you cannot edit that timesheet.")
             raise redirect (url('/'))
 
         entries = Entry.select(Entry.q.sheet==ts).orderBy("id")
@@ -390,7 +390,7 @@ class Root(controllers.RootController):
 
         # Unmark as complete if we're editing a previously-completed TS
         if (ts.status>=COMPLETE):
-            flash("You must resubmit this timesheet for review after editing.")
+            flash("!You must resubmit this timesheet for review after editing.")
             ts.status = INCOMPLETE
             ts.approvedBy = None
             ts.approvedOn = None
@@ -467,7 +467,7 @@ class Root(controllers.RootController):
             identity.current.user.id == ts.whose.approver.id:
                 pass
         else:
-            flash("Sorry, you cannot review that timesheet.")
+            flash("!Sorry, you cannot review that timesheet.")
             raise redirect (url('/'))
 
         if ts.status<COMPLETE or ts.status>=APPROVED:
@@ -549,7 +549,7 @@ class Root(controllers.RootController):
             identity.current.user.id == ts.whose.approver.id:
                 pass
         else:
-            flash("Sorry, you cannot review that timesheet.")
+            flash("!Sorry, you cannot review that timesheet.")
             raise redirect (url('/'))
 
         entries = []
@@ -606,7 +606,7 @@ class Root(controllers.RootController):
             server.sendmail(fromaddr, toaddr, msg)
             server.quit()
         except:
-            flash('Sending email failed.  I tried; sorry.\r\nTimesheet marked rejected, but please notify them yourself...')
+            flash('!Sending email failed.  I tried; sorry. Timesheet marked rejected, but please notify them yourself...')
             redirect(url('/index'))
 
         flash('Email sent to '+t.whose.full_name+'.')
@@ -731,7 +731,7 @@ class Root(controllers.RootController):
                     Entry.delete(e.id)
 
             # Now show review page so user can verify and submit timesheet
-            flash('*** FINAL REVIEW: %.1f total hours. This timesheet isn\'t final until you click "Submit for Approval".' % (totalhours,))
+            flash('!FINAL REVIEW: %.1f total hours. This timesheet isn\'t final until you click "Submit for Approval".' % (totalhours,))
             raise redirect(url('/viewonly/%d/%d' % (sheet.id,True)))
 
         elif whichlink.startswith("rm"):
