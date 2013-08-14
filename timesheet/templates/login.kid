@@ -72,11 +72,11 @@
     </style>
 </head>
 
-<body>
+<body OnLoad="document.loginform.user_name.focus();">
     <div id="loginBox">
         <h1>Login</h1>
         <p>${message}</p>
-        <form action="${previous_url}" method="POST">
+        <form action="${previous_url}" method="POST" name="loginform">
             <table>
                 <tr>
                     <td class="label">
