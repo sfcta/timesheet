@@ -242,7 +242,7 @@ div.entry_bubble span {
   padding: 0 0 0 1em;
 }
 td.has_note {
-  background-color:#ffcc00;
+  background-color:#66cc66;
 }
 div.note_tooltip {
   display: none;
@@ -254,7 +254,7 @@ div.note_tooltip span {
   min-width: 15em;
   padding: 1px;
   border: 1px solid #000;
-  background-color:#ffcc00;
+  background-color:#99ee99;
 }
 td.has_note:hover div.note_tooltip {
   display: block;

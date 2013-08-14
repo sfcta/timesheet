@@ -52,7 +52,7 @@
     </div>
 
     <div id="footer">
-        <p>(c) 2009 San Francisco County Transportion Authority</p>
+        <p>(c) 2009 San Francisco County Transportation Authority</p>
     </div>
 </body>
 
