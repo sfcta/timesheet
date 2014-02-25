@@ -19,18 +19,11 @@
         }
     </style>
 
-    <?python
-        fancy = cherrypy.request.headers['User-Agent'].find('BlackBerry')<0
-    ?>
-    <link py:if="fancy"
-          rel="stylesheet" type="text/css" media="screen" href="../static/css/styles.css"
+    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/styles.css"
           py:attrs="href=tg.url('/static/css/styles.css')"/>
 </head>
 
 <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">
-    <?python
-        fancy = cherrypy.request.headers['User-Agent'].find('BlackBerry')<0
-    ?>
 
     <div py:if="tg.config('identity.on') and not defined('logging_in')" id="pageLogin">
         <span py:if="tg.identity.anonymous">
@@ -41,18 +34,25 @@
         </span>
     </div>
 
-    <div py:if="fancy" id="header">&#160;</div>
-    <div py:if="fancy" id="headerlink"><a href="http://http://codingforums.com/"></a></div>
+    <div id="header">&#160;</div>
+    <div id="headerlink"><a href="http://http://codingforums.com/"></a></div>
 
     <div id="main_content">
-        <div id="status_block" class="flash"
-            py:if="value_of('tg_flash', None)" py:content="tg_flash"></div>
+
+        <!-- flash and warning boxes -->
+        <span py:if="tg_flash != None and tg_flash[0] != '!'">
+          <div id="status_block" class="flash" py:if="value_of('tg_flash',None)" py:content="tg_flash"></div>
+        </span>
+        <span py:if="tg_flash != None and tg_flash[0] == '!'">
+          <div id="warning_block" class="flash" py:if="value_of('tg_flash', None)" py:content="tg_flash[1:]"></div>
+        </span>
+
+        <!-- main content -->
         <div py:replace="[item.text]+item[:]">page content</div>
     </div>
 
-    <div py:if="fancy"
-        id="footer">
-        <p>(c) 2009 San Francisco County Transportion Authority</p>
+    <div id="footer">
+        <p>(c) 2009 San Francisco County Transportation Authority</p>
     </div>
 </body>
 

@@ -27,7 +27,7 @@ function x( selectedtype )
 
         ${form.display()}
     </td>
-    <td py:if="'timesheet-admin' in tg.identity.groups" align="right" valign="top">
+    <td py:if="dateform != None and 'timesheet-admin' in tg.identity.groups" align="right" valign="top">
 	    <table cellspacing="10" border="1" cellpadding="10" bgcolor="#ffffcc">
             <tr><td valign="top" cellpadding="5">
                 <b>&nbsp;Create New Timesheet for this Employee:</b>

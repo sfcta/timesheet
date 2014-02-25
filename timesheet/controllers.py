@@ -50,9 +50,6 @@ import types
 
 import model
 
-# from timesheet import json
-# import logging
-# log = logging.getLogger("timesheet.controllers")
 
 # FORMS and globals -----------------------------------------------------------
 def kidfile(name):
@@ -152,6 +149,9 @@ class ExportForm(TableForm):
 # -----------------------------------------------------------------------------
 class Root(controllers.RootController):
 
+    #Allow database editing, for now
+    database = CatWalk(model)
+
     def buildProjectsByDept(self= None):
         pbd = {}
         lookup = []
@@ -194,9 +194,6 @@ class Root(controllers.RootController):
                 plookup[truncatedname] = p
 
         return pcodes, plookup
-
-    #Allow database editing, for now
-    database = CatWalk(model)
 
     projectsByDept = buildProjectsByDept()
     projectLookupByCode, projectLookupByDescription = buildProjectLookup()
@@ -367,7 +364,7 @@ class Root(controllers.RootController):
             or (identity.current.user.isManager and ts.status<LOCKED):
                 pass
         else:
-            flash("Sorry, you cannot edit that timesheet.")
+            flash("!Sorry, you cannot edit that timesheet.")
             raise redirect (url('/'))
 
         entries = Entry.select(Entry.q.sheet==ts).orderBy("id")
@@ -393,7 +390,7 @@ class Root(controllers.RootController):
 
         # Unmark as complete if we're editing a previously-completed TS
         if (ts.status>=COMPLETE):
-            flash("You must resubmit this timesheet for review after editing.")
+            flash("!You must resubmit this timesheet for review after editing.")
             ts.status = INCOMPLETE
             ts.approvedBy = None
             ts.approvedOn = None
@@ -470,7 +467,7 @@ class Root(controllers.RootController):
             identity.current.user.id == ts.whose.approver.id:
                 pass
         else:
-            flash("Sorry, you cannot review that timesheet.")
+            flash("!Sorry, you cannot review that timesheet.")
             raise redirect (url('/'))
 
         if ts.status<COMPLETE or ts.status>=APPROVED:
@@ -552,7 +549,7 @@ class Root(controllers.RootController):
             identity.current.user.id == ts.whose.approver.id:
                 pass
         else:
-            flash("Sorry, you cannot review that timesheet.")
+            flash("!Sorry, you cannot review that timesheet.")
             raise redirect (url('/'))
 
         entries = []
@@ -602,12 +599,14 @@ class Root(controllers.RootController):
         msg = msg + '\r\n\r\nTo edit this timesheet, go to http://timesheets/edit/%d' % t.id
 
         try:
-            server = smtplib.SMTP('$$MAILSERVER$$',25)
+            mailserver = tg.config.get('mail.server','localhost')
+            port = tg.config.get('mail.port',25)
+            server = smtplib.SMTP(mailserver,port)
             server.set_debuglevel(1)
             server.sendmail(fromaddr, toaddr, msg)
             server.quit()
         except:
-            flash('Sending email failed.  I tried; sorry.\nTimesheet marked rejected, but please notify them yourself...')
+            flash('!Sending email failed.  I tried; sorry. Timesheet marked rejected, but please notify them yourself...')
             redirect(url('/index'))
 
         flash('Email sent to '+t.whose.full_name+'.')
@@ -732,7 +731,7 @@ class Root(controllers.RootController):
                     Entry.delete(e.id)
 
             # Now show review page so user can verify and submit timesheet
-            flash('*** FINAL REVIEW: %.1f total hours. This timesheet isn\'t final until you click "Submit for Approval".' % (totalhours,))
+            flash('!FINAL REVIEW: %.1f total hours. This timesheet isn\'t final until you click "Submit for Approval".' % (totalhours,))
             raise redirect(url('/viewonly/%d/%d' % (sheet.id,True)))
 
         elif whichlink.startswith("rm"):
@@ -1077,8 +1076,10 @@ class Root(controllers.RootController):
                                 action='/updateperson')
 
         # Add field to create one new timesheet for this employee
-        DateForm = TableForm('date_picker', fields = dateform_fields(),
-            action = tg.url('/createonesheet/'+str(dID)), submit_text = "Create timesheet")
+        DateForm = None
+        if (dID != -1):
+            DateForm = TableForm('date_picker', fields = dateform_fields(),
+                action = tg.url('/createonesheet/'+str(dID)), submit_text = "Create timesheet")
 
         return dict(form=EmpForm, dateform=DateForm)
 
@@ -1351,7 +1352,7 @@ class Root(controllers.RootController):
 
                 wHours.append(widgets.TextField('%d:%d'%(x,day), # name is now row:day
                     default = row.hours[day] or '', # This suppresses 0.0 cells.
-                    attrs=dict(size="1", style="width:32px",
+                    attrs=dict(size="1", style="width:32px", autocomplete="off",
                                onchange="updatelabels()",
                                onkeydown=keymapper),
                     validator=validators.Number()))

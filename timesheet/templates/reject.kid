@@ -21,17 +21,13 @@ function x( selectedtype )
 </head>
 
 <body>
-<?python
-    bberry = cherrypy.request.headers['User-Agent'].find('BlackBerry')>=0
-?>
 
-<b py:if="not bberry">Reject Timesheet - ${person.full_name}</b>
-<b py:if="bberry">Reject Timesheet<br/>${person.full_name}</b>
+<b>Reject Timesheet - ${person.full_name}</b>
 <br/>
 
 <table width="100%"><tr>
     <td align="left">${ts.start} - ${ts.enddate}</td>
-    <td py:if="not bberry" align="right">
+    <td align="right">
         <span py:if="ts.status!=0"><img src="${tg.url('/static/images/ok-small.png')}" alt="X"/> Completed</span>
         <span py:if="ts.status>=3">&nbsp;&nbsp;&nbsp;&nbsp;<img src="${tg.url('/static/images/ok-small.png')}" alt="X"/> Approved</span>
     </td>
@@ -39,7 +35,7 @@ function x( selectedtype )
 
 <hr/>
 
-<div py:if="not bberry">
+<div>
     <table width="100%">
     <tr><td></td><td></td><td></td>
     <td align="center"><b>Mo</b></td><td align="center"><b>Tu</b></td><td align="center"><b>We</b></td><td align="center"><b>Th</b></td><td align="center"><b>Fr</b></td><td align="center" bgcolor="#dddddd"><b>Sa</b></td><td align="center" bgcolor="#dddddd"><b>Su</b></td>
@@ -92,22 +88,14 @@ function x( selectedtype )
     <br/>
 </div>
 
-<b>Please explain why this timesheet is being rejected:</b><br/>
-This will be emailed to ${person.full_name} along with a request to resubmit the timesheet.<br/>
+<b><font style="background-color:#ff8;">&nbsp;Please explain why this timesheet is being rejected:</font></b><br/>
+&nbsp;This will be emailed to ${person.full_name} along with a request to resubmit the timesheet.<br/>
 
 ${form.display()}
 
-<div py:if="not bberry">
-<a class="actionbar" href="javascript:x('cancel')">Cancel</a>
-<a class="actionbar" href="javascript:x('sendemail')">Reject and Send Back</a>
-</div>
-
-<div py:if="bberry">
-    Actions:
-    <ol>
-        <li><b><a href="javascript:x('sendemail')">Reject and Send Back</a></b></li>
-        <li><b><a href="javascript:x('cancel')">Cancel</a></b></li>
-    </ol>
+<div>
+  <a class="actionbarleft" href="javascript:x('sendemail')">Reject and Send Back</a>
+  <a class="actionbarleft" href="javascript:x('cancel')">Cancel</a>
 </div>
 
 </body>

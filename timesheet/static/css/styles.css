@@ -43,34 +43,34 @@ a.link, a, a.active {
 
 #main_content a.actionbar {
     float: right;
-    color: blue;
+    color: #ff8;
     text-align: right;
-    font-weight: bold;
-    background-color: #eeb;
+    font-weight: normal;
+    background-color: #88d;
     border-radius: 4px;
     padding: 4px;
     margin: 4px;
 }
 
 #main_content a.actionbar:hover {
-    color:white;
-    background-color:#66a;
+    color:#8f0;
+    background-color:#448;
 }
 
 #main_content a.actionbarleft {
     float: left;
-    color: blue;
+    color: #ff8;
     text-align: right;
-    font-weight: bold;
-    background-color: #eeb;
+    font-weight: normal;
+    background-color: #88d;
     border-radius: 4px;
     padding: 4px;
     margin: 4px;
 }
 
 #main_content a.actionbarleft:hover {
-    color:white;
-    background-color:#66a;
+    color:#8f0;
+    background-color:#448;
 }
 
 #main_content a.deleteme {
@@ -162,11 +162,19 @@ span.code {
 }
 
 #status_block {
-  margin: 0 auto 0.5em auto;
+  margin: 0px auto 10px auto;
   padding: 15px 10px 15px 55px;
   background: #cec URL('../images/ok.png') left center no-repeat;
   border: 1px solid #9c9;
-  width: 450px;
+  font-size: 120%;
+  font-weight: bolder;
+}
+
+#warning_block {
+  margin: 0px auto 10px auto;
+  padding: 15px 10px 15px 55px;
+  background: #edb URL('../images/warning.png') left center no-repeat;
+  border: 1px solid #eaa;
   font-size: 120%;
   font-weight: bolder;
 }
@@ -234,7 +242,7 @@ div.entry_bubble span {
   padding: 0 0 0 1em;
 }
 td.has_note {
-  background-color:#ffcc00;
+  background-color:#66cc66;
 }
 div.note_tooltip {
   display: none;
@@ -246,7 +254,7 @@ div.note_tooltip span {
   min-width: 15em;
   padding: 1px;
   border: 1px solid #000;
-  background-color:#ffcc00;
+  background-color:#99ee99;
 }
 td.has_note:hover div.note_tooltip {
   display: block;
